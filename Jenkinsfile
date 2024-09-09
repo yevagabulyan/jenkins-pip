@@ -7,6 +7,7 @@ pipeline {
             steps {
                 sh 'echo "Without docker"'
                 sh 'whoami'
+                sh 'docker images'
             }
         }
 
