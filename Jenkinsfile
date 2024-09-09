@@ -1,15 +1,6 @@
 pipeline {
     agent any
 
-    stages {
-        stage('w/o docker') {
-            steps {
-                sh 'echo "Without docker"'
-                sh 'whoami'
-                sh 'docker images'
-            }
-        }
-
         stage('w/ docker') {
             agent {
                 docker {
@@ -20,6 +11,8 @@ pipeline {
             steps {
                 sh 'echo "With docker"'
                 sh 'npm --version'
+                sh 'npm ci'
+                sh 'npm run build'
                 sh 'touch 123.txt'
                 sh 'echo test > 123.txt'
             }
