@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        // Set npm cache directory to a writable path
+        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm" 
+    }
+
     stages {
         stage('Build') {
             agent {
@@ -14,7 +19,7 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
-                    npm install
+                    npm ci
                     npm run build
                     ls -la
                 '''
