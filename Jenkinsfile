@@ -17,7 +17,6 @@ pipeline {
                 sh 'echo test > 123.txt'
             }
         }
-    }
     post {
         success {
             archiveArtifacts artifacts: '123.txt'
