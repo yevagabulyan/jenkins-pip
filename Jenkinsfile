@@ -3,7 +3,6 @@ pipeline {
 
     stages {
         stage('w/o docker') {
-            agent any
             steps {
                 sh 'echo "Without docker"'
                 sh 'whoami'
