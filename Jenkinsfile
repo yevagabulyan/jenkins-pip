@@ -1,30 +1,22 @@
 pipeline {
     agent any
-    
-    environment {
-        BUILD_FILE_NAME = 'home.txt'
-    }
 
     stages {
-        stage('build') {
+        stage('w/o docker') {
             steps {
-                cleanWs()
-                echo 'Hello World'
-                echo "$BUILD_FILE_NAME"
-                sh '''mkdir -p build
-                    \\touch build/home.txt
-                    echo kitchen >> $BUILD_FILE_NAME
-                    cat build/home.txt
-                    echo livingroom >> $BUILD_FILE_NAME
-                    echo $BUILD_FILE_NAME
-                    '''
+                sh 'echo "Without docker"'
             }
         }
-        stage('test') {
+
+        stage('w/ docker') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                }
+            }
             steps {
-                sh '''test -f $BUILD_FILE_NAME
-                grep kitchen $BUILD_FILE_NAME
-                grep livingroom $BUILD_FILE_NAME'''
+                sh 'echo "With docker"'
+                sh 'npm --version'
             }
         }
     }
