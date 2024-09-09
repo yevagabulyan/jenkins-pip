@@ -1,7 +1,8 @@
 pipeline {
     agent any
 
-        stage('w/ docker') {
+    stages {
+        stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -9,17 +10,16 @@ pipeline {
                 }
             }
             steps {
-                sh 'echo "With docker"'
-                sh 'npm --version'
-                sh 'npm ci'
-                sh 'npm run build'
-                sh 'touch 123.txt'
-                sh 'echo test > 123.txt'
+                sh '''
+                    ls -la
+                    node --version
+                    npm --version
+                    npm ci
+                    npm run build
+                    ls -la
+                '''
             }
-        }
-    post {
-        success {
-            archiveArtifacts artifacts: '123.txt'
         }
     }
 }
+
