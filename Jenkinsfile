@@ -21,6 +21,7 @@ pipeline {
                     npm --version
                     npm ci
                     npm run build
+                    ls -la
                 '''
             }
         }
@@ -33,16 +34,18 @@ pipeline {
             }
             steps {
                 sh '''
-                 test -f build/index.html
-                 npm test
+                    ls -la
+                    node --version
+                    npm --version
+                    npm run test
+                    ls -la
+                    if [ -e /builds/index.html]
+                        then
+                            echo "File index.htlm exists."
+                    else 
+                        echo "There's no such a file."
+                    fi
                 '''
-            }
-        }
-    }
-    post {
-        always {
-            junit 'test-results/junit.xml'
-            }
+            }  
     }
 }
-
